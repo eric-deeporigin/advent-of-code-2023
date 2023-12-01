@@ -42,8 +42,8 @@ const lookAhead = (
     if (offsetIndex > index) {
       lookedAtWord = charArr.slice(index, offsetIndex).join("");
     } else {
-      // looking behind
-      lookedAtWord = charArr.slice(offsetIndex, index).join("");
+      // Offest by one because of the old off-by-one error thing
+      lookedAtWord = charArr.slice(offsetIndex + 1, index + 1).join("");
     }
 
     return word === lookedAtWord;
