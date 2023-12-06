@@ -4,19 +4,15 @@ import * as path from "path";
 const input = fs.readFileSync(path.join(__dirname, "input.txt")).toString();
 
 const getTimes = (inputStr: string) => {
-  console.log("🚀 inputStr:", inputStr);
-
   const nestedInput = inputStr
     .split("\n")
     .map((line) => line.replace(/\s+/g, " ").split(" "));
-  console.log("🚀 ~ file: index.ts:12 ~ getTimes ~ nestedInput:", nestedInput);
   const res: [number, number][] = nestedInput[0].map((line, i, arr) => {
     return [+line, +nestedInput[1][i]];
   });
 
   res.shift();
 
-  console.log(res);
   return res;
 };
 
@@ -40,4 +36,23 @@ const findNumWaysToWin = (race: [number, number]): number => {
 };
 
 const races = getTimes(input);
-console.log(races.map(findNumWaysToWin).reduce((acc, wins) => acc * wins, 1));
+// Ans
+console.log(
+  "🚀 part1",
+  races.map(findNumWaysToWin).reduce((acc, wins) => acc * wins, 1)
+);
+
+// Pt 2
+
+const race: [string, string] = getTimes(input).reduce(
+  (race, subSet) => {
+    race[0] = `${race[0]}${subSet[0]}`;
+    race[1] = `${race[1]}${subSet[1]}`;
+    return race;
+  },
+  ["", ""]
+);
+
+// Ans
+const finalRace = findNumWaysToWin([+race[0], +race[1]]);
+console.log("🚀 part2", finalRace);
